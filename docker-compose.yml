@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  hbase:
+    image: wsmt/hbase-standalone:2.0.1
+    container_name: wsmt-hbase
+
+  pixel-tracker:
+    image: openjdk:8-jre-slim
+    container_name: wsmt-pixel-tracker
+    command: "java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -jar /opt/pixel-tracker/pixel-tracker.jar"
+    depends_on:
+      - hbase
+    ports:
+      - "8080:8080"
+      - "5005:5005"
+    volumes:
+      - ./modules/pixel-tracker/target/pixel-tracker.jar:/opt/pixel-tracker/pixel-tracker.jar

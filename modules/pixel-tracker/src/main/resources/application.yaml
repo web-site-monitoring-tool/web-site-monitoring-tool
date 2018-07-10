@@ -1,0 +1,5 @@
+server.port: 8080
+hbase.hbase.zookeeper.quorum: "hbase:2181"
+profile:
+  id.cookie-name: uid
+  table: profiles
