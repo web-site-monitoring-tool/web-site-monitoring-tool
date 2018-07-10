@@ -34,3 +34,15 @@ The goal is to build a tool for monitoring audience activity of website. This se
 
 * Language: JS
 * Frameworks: Bootstrap
+
+## Run book
+### Build
+    mvn clean package
+### Run
+    docker-compose up
+### Get endpoint
+    curl http://localhost:8080/pixel
+### Start hbase shell
+    docker exec -i -t wsmt-hbase hbase shell
+### Scan database
+    scan 'profiles', {COLUMNS => ['HISTORY', 'HEADER'], VERSIONS => 10}
