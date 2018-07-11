@@ -58,6 +58,7 @@ public class PixelHandler implements HandlerFunction<ServerResponse> {
 
     @Override
     public Mono<ServerResponse> handle(ServerRequest serverRequest) {
+
         List<HttpCookie> userIdCookies = serverRequest.cookies()
                 .get(profileIdCookieName);
         boolean newProfile = userIdCookies == null || userIdCookies.isEmpty();
