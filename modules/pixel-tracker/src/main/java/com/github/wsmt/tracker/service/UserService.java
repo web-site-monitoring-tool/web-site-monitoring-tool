@@ -6,16 +6,14 @@ import com.github.wsmt.tracker.model.User;
 
 public class UserService {
 
-    private final String profileIdCookieName;
     private final UserDao userDao;
 
-    private UserService(String profileIdCookieName, UserDao userDao) {
-        this.profileIdCookieName = profileIdCookieName;
+    private UserService(UserDao userDao) {
         this.userDao = userDao;
     }
 
-    public static UserService create(String profileIdCookieName, UserDao userDao) {
-        return new UserService(profileIdCookieName, userDao);
+    public static UserService create(UserDao userDao) {
+        return new UserService(userDao);
     }
 
 

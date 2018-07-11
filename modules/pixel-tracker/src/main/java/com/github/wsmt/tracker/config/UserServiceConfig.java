@@ -2,7 +2,6 @@ package com.github.wsmt.tracker.config;
 
 import com.github.wsmt.tracker.dao.UserDao;
 import com.github.wsmt.tracker.service.UserService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -10,8 +9,7 @@ import org.springframework.context.annotation.Configuration;
 public class UserServiceConfig {
 
     @Bean
-    public UserService userService(@Value("${profile.id.cookie-name}") String profileIdCookieName,
-                                   UserDao userDao) {
-        return UserService.create(profileIdCookieName, userDao);
+    public UserService userService(UserDao userDao) {
+        return UserService.create(userDao);
     }
 }
