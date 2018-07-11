@@ -83,4 +83,14 @@
             </plugin>
         </plugins>
     </build>
+
+    <profiles>
+        <profile>
+            <id>demo</id>
+
+            <modules>
+                <module>modules/demo</module>
+            </modules>
+        </profile>
+    </profiles>
 </project>

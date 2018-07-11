@@ -16,3 +16,14 @@ services:
       - "5005:5005"
     volumes:
       - ./modules/pixel-tracker/target/pixel-tracker.jar:/opt/pixel-tracker/pixel-tracker.jar
+
+  demo:
+    image: openjdk:8-jre-slim
+    container_name: wsmt-demo
+    command: "java -jar /opt/demo/demo.jar"
+    depends_on:
+      - hbase
+    ports:
+      - "8081:8080"
+    volumes:
+      - ./modules/demo/target/demo.jar:/opt/demo/demo.jar
