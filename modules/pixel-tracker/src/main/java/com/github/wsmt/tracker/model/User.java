@@ -7,6 +7,7 @@ import java.util.UUID;
 public class User {
 
     private String id;
+    private boolean newProfile = false;
     private Map<String, String> info = new HashMap<>();
     private Map<String, String> behavior = new HashMap<>();
 
@@ -15,7 +16,8 @@ public class User {
     }
 
     public User() {
-        id = UUID.randomUUID().toString();
+        this(UUID.randomUUID().toString());
+        newProfile = true;
     }
 
     public String getId() {
@@ -40,6 +42,14 @@ public class User {
 
     public void setBehavior(Map<String, String> behavior) {
         this.behavior = behavior;
+    }
+
+    public boolean isNewProfile() {
+        return newProfile;
+    }
+
+    public void setNewProfile(boolean newProfile) {
+        this.newProfile = newProfile;
     }
 
     @Override
