@@ -2,6 +2,7 @@ package com.github.wsmt.tracker.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class User {
 
@@ -14,7 +15,7 @@ public class User {
     }
 
     public User() {
-        this("");
+        id = UUID.randomUUID().toString();
     }
 
     public String getId() {
