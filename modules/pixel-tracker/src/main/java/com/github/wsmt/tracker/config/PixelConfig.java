@@ -1,6 +1,7 @@
 package com.github.wsmt.tracker.config;
 
 import com.github.wsmt.tracker.handler.PixelHandler;
+import com.github.wsmt.tracker.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,8 +21,7 @@ public class PixelConfig {
     @Bean
     public PixelHandler pixelHandler(@Value("classpath:/pixel.png") Resource pixel,
                                      @Value("${profile.id.cookie-name}") String profileIdCookieName,
-                                     org.apache.hadoop.conf.Configuration hBaseConfiguration,
-                                     @Value("${profile.table}") String profileTable) {
-        return PixelHandler.newPixelHandler(pixel, profileIdCookieName, hBaseConfiguration, profileTable);
+                                     UserService userService) {
+        return PixelHandler.newPixelHandler(pixel, profileIdCookieName, userService);
     }
 }
