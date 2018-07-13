@@ -5,10 +5,7 @@ import com.github.wsmt.tracker.model.User;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.hbase.TableName;
-import org.apache.hadoop.hbase.client.ColumnFamilyDescriptorBuilder;
-import org.apache.hadoop.hbase.client.ConnectionFactory;
-import org.apache.hadoop.hbase.client.Put;
-import org.apache.hadoop.hbase.client.TableDescriptorBuilder;
+import org.apache.hadoop.hbase.client.*;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,8 +14,8 @@ import java.io.IOException;
 import java.util.concurrent.CompletableFuture;
 
 public class UserDaoImpl implements UserDao {
-    private static final Logger log = LoggerFactory.getLogger(UserDaoImpl.class);
 
+    private static final Logger log = LoggerFactory.getLogger(UserDaoImpl.class);
 
     private final Configuration hBaseConfiguration;
     private final TableName profileTable;
@@ -84,5 +81,38 @@ public class UserDaoImpl implements UserDao {
                             }
                         }));
         return user;
+    }
+
+    public void resetTable() {
+
+        ConnectionFactory.createAsyncConnection(hBaseConfiguration)
+                .thenAccept(connection -> connection.getAdmin()
+                        .disableTable(profileTable)
+                        .thenCompose(result -> connection.getAdmin()
+                                .deleteTable(profileTable)
+                        )
+                        .thenCompose(result -> connection.getAdmin()
+                                .createTable(TableDescriptorBuilder.newBuilder(profileTable)
+                                        .setColumnFamily(ColumnFamilyDescriptorBuilder.newBuilder(
+                                                Bytes.toBytes("HISTORY")
+                                        )
+                                                .setMaxVersions(100)
+                                                .build())
+                                        .setColumnFamily(ColumnFamilyDescriptorBuilder.newBuilder(
+                                                Bytes.toBytes("HEADER")
+                                        )
+                                                .setMaxVersions(100)
+                                                .build())
+                                        .build()))
+                        .whenComplete((response, exception) -> {
+                            if (exception != null) {
+                                log.warn("Tracker does not track visit.", exception);
+                            }
+                            try {
+                                connection.close();
+                            } catch (IOException e) {
+                                log.warn("Tracker does not close connection.", e);
+                            }
+                        }));
     }
 }

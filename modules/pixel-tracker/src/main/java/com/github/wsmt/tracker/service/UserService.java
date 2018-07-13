@@ -18,7 +18,10 @@ public class UserService {
 
 
     public User save(User user) {
-
         return userDao.save(user);
+    }
+
+    public void resetProfileTable() {
+        userDao.resetTable();
     }
 }
