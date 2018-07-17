@@ -17,10 +17,16 @@
 
     <modules>
         <module>modules/pixel-tracker</module>
+        <module>modules/reporter</module>
     </modules>
+
+    <properties>
+        <maven.test.skip>true</maven.test.skip>
+    </properties>
 
     <dependencyManagement>
         <dependencies>
+            <!--hbase-->
             <dependency>
                 <groupId>org.apache.hbase</groupId>
                 <artifactId>hbase-client</artifactId>
@@ -31,6 +37,23 @@
                         <artifactId>slf4j-log4j12</artifactId>
                     </exclusion>
                 </exclusions>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.hbase</groupId>
+                <artifactId>hbase-mapreduce</artifactId>
+                <version>2.0.1</version>
+            </dependency>
+            <!--spark-->
+            <dependency>
+                <groupId>org.apache.spark</groupId>
+                <artifactId>spark-sql_2.11</artifactId>
+                <version>2.3.1</version>
+            </dependency>
+            <!--config-->
+            <dependency>
+                <groupId>com.typesafe</groupId>
+                <artifactId>config</artifactId>
+                <version>1.3.3</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -87,6 +110,10 @@
     <profiles>
         <profile>
             <id>demo</id>
+
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
 
             <modules>
                 <module>modules/demo</module>

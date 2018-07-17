@@ -22,8 +22,19 @@ services:
     container_name: wsmt-demo
     command: "java -jar /opt/demo/demo.jar"
     depends_on:
-      - hbase
+      - pixel-tracker
     ports:
       - "8081:8080"
     volumes:
       - ./modules/demo/target/demo.jar:/opt/demo/demo.jar
+
+  reporter:
+    image: openjdk:8-jre-slim
+    container_name: wsmt-reporter
+    command: "java -jar /opt/reporter/reporter.jar /opt/reporter/reporter.conf"
+#    restart: unless-stopped
+    depends_on:
+      - hbase
+    volumes:
+      - ./modules/reporter/target/reporter.jar:/opt/reporter/reporter.jar
+      - ./modules/reporter/application.conf:/opt/reporter/reporter.conf
