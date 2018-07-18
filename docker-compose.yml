@@ -50,3 +50,26 @@ services:
     volumes:
       - ./modules/reporter/target/reporter.jar:/opt/reporter/reporter.jar
       - ./modules/reporter/application.conf:/opt/reporter/reporter.conf
+
+  api:
+    image: openjdk:8-jre-slim
+    container_name: wsmt-api
+    command: "java -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005 -jar /opt/api/api.jar"
+    depends_on:
+      - postgres
+    ports:
+      - "8082:8080"
+      - "5006:5005"
+    volumes:
+      - ./modules/api/target/api.jar:/opt/api/api.jar
+
+  admin:
+    image: openjdk:8-jre-slim
+    container_name: wsmt-admin
+    command: "java -jar /opt/admin/admin.jar"
+    depends_on:
+      - api
+    ports:
+      - "8083:8080"
+    volumes:
+      - ./modules/admin/target/admin.jar:/opt/admin/admin.jar

@@ -43,3 +43,9 @@ CREATE TABLE stat.web_site_pages(
   quantity INT,
   UNIQUE (page, web_site_id)
 );
+
+CREATE TABLE stat.urls(
+  id SERIAL PRIMARY KEY ,
+  url TEXT NOT NULL,
+  count INT NOT NULL
+);
