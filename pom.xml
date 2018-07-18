@@ -18,6 +18,8 @@
     <modules>
         <module>modules/pixel-tracker</module>
         <module>modules/reporter</module>
+        <module>modules/api</module>
+        <module>modules/admin</module>
     </modules>
 
     <properties>
