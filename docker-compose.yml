@@ -5,6 +5,18 @@ services:
     image: wsmt/hbase-standalone:2.0.1
     container_name: wsmt-hbase
 
+  postgres:
+    image: postgres:10.4
+    container_name: wsmt-postgres
+    volumes:
+        - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: wsmt
+      POSTGRES_USER: wsmt
+      POSTGRES_PASSWORD: wsmt
+
   pixel-tracker:
     image: openjdk:8-jre-slim
     container_name: wsmt-pixel-tracker
