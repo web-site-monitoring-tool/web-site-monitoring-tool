@@ -29,6 +29,11 @@
             <groupId>com.typesafe</groupId>
             <artifactId>config</artifactId>
         </dependency>
+        <!--postgresql-->
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

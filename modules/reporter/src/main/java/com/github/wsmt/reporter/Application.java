@@ -8,6 +8,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
+import org.apache.spark.sql.SaveMode;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructType;
 
@@ -43,6 +44,10 @@ public class Application {
 
         applicationConfig.getSqlContext()
                 .sql("SELECT url, COUNT(url) AS count FROM url GROUP BY url ORDER BY count DESC")
-                .show(false);
+                .write()
+                .format("jdbc")
+                .options(applicationConfig.getPostgresConf())
+                .mode(SaveMode.Append)
+                .save();
     }
 }
