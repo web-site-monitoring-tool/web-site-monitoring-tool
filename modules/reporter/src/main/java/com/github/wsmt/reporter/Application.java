@@ -8,6 +8,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.RowFactory;
+import org.apache.spark.sql.SaveMode;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructType;
 import scala.Tuple2;
@@ -54,7 +55,14 @@ public class Application {
 
         applicationConfig.getSqlContext()
                 .createDataFrame(result, schema)
-//                .registerTempTable("statistics");
-                .show(false);
+                .registerTempTable("url");
+
+        applicationConfig.getSqlContext()
+                .sql("SELECT url, COUNT(url) AS count FROM url GROUP BY url ORDER BY count DESC")
+                .write()
+                .format("jdbc")
+                .options(applicationConfig.getPostgresConf())
+                .mode(SaveMode.Append)
+                .save();
     }
 }
