@@ -34,5 +34,4 @@ public class RepositoryCountryStatisticsServiceTest {
         CountryStatisticsService service = RepositoryCountryStatisticsService.byRepository(repository);
         assertTrue(service.countryStatistics().blockFirst() instanceof CountryStatistics);
     }
-
 }
