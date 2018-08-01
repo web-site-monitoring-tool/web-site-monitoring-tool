@@ -72,6 +72,7 @@ services:
     command: "java -jar /opt/admin/admin.jar"
     depends_on:
       - api
+      - reporter
     ports:
       - "8083:8080"
     volumes:

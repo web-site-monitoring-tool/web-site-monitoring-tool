@@ -5,6 +5,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpCookie;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.reactive.function.server.ServerRequest;
 import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
@@ -35,14 +36,15 @@ public class PixelHandlerTest {
         String cookieName = "cookie";
         String cookieValue = "123456";
 
-        when(serverRequest.cookies()
-                .getFirst(cookieName))
-                .thenReturn(new HttpCookie(cookieName, cookieValue));
+        when(serverRequest
+                .cookies()
+                .getFirst(cookieName)
+        ).thenReturn(new HttpCookie(cookieName, cookieValue));
 
         PixelHandler pixelHandler = PixelHandler.newPixelHandler(resource, cookieName, userService);
         Mono<ServerResponse> responseMono = pixelHandler.handle(serverRequest);
 
-        assertTrue(resource.exists());
+        assertEquals(200, responseMono.block().statusCode().value());
     }
 
 }
