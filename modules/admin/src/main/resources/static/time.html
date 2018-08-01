@@ -1,10 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
+<html>
+    <head>
+        <link type="text/css" rel="stylesheet" href="webjars/bootstrap/4.1.1/css/bootstrap.min.css">
+        <title>wsmt</title>
+    </head>
+
+    <body>
+        <div class="container" style="padding-top: 5px">
+            <a href="url.html" class="btn btn-light" role="button" aria-pressed="true">Url</a>
+            <a href="browser.html" class="btn btn-light" role="button" aria-pressed="true">Browser</a>
+            <a href="geo.html" class="btn btn-light" role="button" aria-pressed="true">Country</a>
+            <a href="day.html" class="btn btn-light" role="button" aria-pressed="true">Days</a>
+            <a href="time.html" class="btn btn-dark" role="button" aria-pressed="true">Times</a>
+            <a class="btn btn-light float-right" role="button" aria-pressed="true" onclick=report()>Refresh</a>
+        </div>
+
+        <div class="container align-content-center" style="padding-top: 10px;">
+            <div id="columnchart_material" style="height: 400px;"></div>
+        </div>
+
+        <script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
+        <script src="webjars/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+
+            google.charts.load('current', {'packages':['bar']});
+            google.charts.setOnLoadCallback(drawChart);
+
+            function drawChart() {
+                var data = google.visualization.arrayToDataTable([]);
+
+                data.addColumn('string', 'Time');
+                data.addColumn('number', 'Count');
+
+                $.getJSON('http://' + window.location.hostname + ':8082/times', function(jsonData) {
+                    $.each(jsonData, function (i, row) {
+
+                        data.addRow([
+                            row.time,
+                            row.count
+                        ]);
+                    });
+                    var options = {
+                        chart: {
+                            title: 'Time of day',
+                        }
+                    };
+                    var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+                    chart.draw(data, google.charts.Bar.convertOptions(options));
+                });
+            }
+        </script>
+        <script>
+            function report() {
+                const xhttp = new XMLHttpRequest();
+                xhttp.open('GET', 'http://' + window.location.hostname + ':8084/report', false);
+                xhttp.send();
+                return false;
+            }
+        </script>
+    </body>
 </html>

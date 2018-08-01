@@ -1,14 +1,22 @@
-package com.github.wsmt.reporter.handler;
+package com.github.wsmt.reporter.handler.impl;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.github.wsmt.reporter.handler.Handler;
+import nl.basjes.parse.useragent.UserAgent;
+import nl.basjes.parse.useragent.UserAgentAnalyzer;
+
 
 public class UserAgentHandler implements Handler {
 
-    private String chrome = "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36";
-    private String epiphany = "Mozilla/5.0 (X11; Ubuntu; Linux x86_64) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/11.0 Safari/605.1.15 elementaryOS/0.4 (Loki) Epiphany/3.18.11";
+    private String param = "AgentName";
+    private static UserAgentAnalyzer userAgentAnalyzer;
 
     private UserAgentHandler() {
-
+        userAgentAnalyzer = UserAgentAnalyzer
+                .newBuilder()
+                .withField(param)
+                //.hideMatcherLoadStats()
+                //.withCache(25000)
+                .build();
     }
 
     public static UserAgentHandler create() {
@@ -17,13 +25,9 @@ public class UserAgentHandler implements Handler {
 
     @Override
     public String handle(String inputRow) {
+        UserAgent agent = userAgentAnalyzer.parse(inputRow);
+        String browserName = agent.getValue(param);
 
-        if (inputRow.equals(chrome)) {
-            return "Chrome";
-        } else if (inputRow.equals(epiphany)) {
-            return "Epiphany";
-        }
-
-        return "Unknown";
+        return browserName != null? browserName : "Unknown";
     }
 }

@@ -4,5 +4,5 @@ import com.github.wsmt.api.model.TimeStatistics;
 import reactor.core.publisher.Flux;
 
 public interface TimeStatisticsService {
-    Flux<TimeStatistics> dateTimeStatistics();
+    Flux<TimeStatistics> timeStatistics();
 }

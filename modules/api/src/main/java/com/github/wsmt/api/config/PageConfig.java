@@ -15,16 +15,16 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 public class PageConfig {
     @Bean
     public RouterFunction<ServerResponse> pageStatisticsRouter(PageStatisticsHandler pageStatisticsHandler) {
-        return RouterFunctions.route(RequestPredicates.GET("/page"), pageStatisticsHandler);
+        return RouterFunctions.route(RequestPredicates.GET("/pages"), pageStatisticsHandler);
     }
 
     @Bean
     public PageStatisticsHandler pageStatisticsHandler(PageStatisticsService pageStatisticsService) {
-        return PageStatisticsHandler.byPageService(pageStatisticsService);
+        return PageStatisticsHandler.byService(pageStatisticsService);
     }
 
     @Bean
-    PageStatisticsService pageStatisticsService(PageStatisticsRepository pageStatisticsRepository) {
+    public PageStatisticsService pageStatisticsService(PageStatisticsRepository pageStatisticsRepository) {
         return RepositoryPageStatisticsService.byRepository(pageStatisticsRepository);
     }
 }

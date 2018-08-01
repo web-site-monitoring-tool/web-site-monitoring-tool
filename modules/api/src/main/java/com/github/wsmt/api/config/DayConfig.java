@@ -12,10 +12,10 @@ import org.springframework.web.reactive.function.server.RouterFunctions;
 import org.springframework.web.reactive.function.server.ServerResponse;
 
 @Configuration
-public class DateConfig {
+public class DayConfig {
     @Bean
-    public RouterFunction<ServerResponse> browserStatisticsRouter(DayStatisticsHandler dayStatisticsHandler) {
-        return RouterFunctions.route(RequestPredicates.GET("/dates"), dayStatisticsHandler);
+    public RouterFunction<ServerResponse> dayStatisticsRouter(DayStatisticsHandler dayStatisticsHandler) {
+        return RouterFunctions.route(RequestPredicates.GET("/days"), dayStatisticsHandler);
     }
 
     @Bean

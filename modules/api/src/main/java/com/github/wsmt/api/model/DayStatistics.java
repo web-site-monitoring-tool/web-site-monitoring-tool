@@ -9,13 +9,13 @@ import javax.persistence.Table;
 import java.util.Date;
 
 @Entity
-@Table(name = "date")
+@Table(name = "day")
 public class DayStatistics {
     @Id
     @GeneratedValue
     @JsonIgnore
     private final Integer id = null;
-    private final String date = null;
+    private final String day = null;
     private final Integer count = null;
     @JsonIgnore
     private final Date report = null;
@@ -24,8 +24,8 @@ public class DayStatistics {
         return id;
     }
 
-    public String getDate() {
-        return date;
+    public String getDay() {
+        return day;
     }
 
     public Integer getCount() {

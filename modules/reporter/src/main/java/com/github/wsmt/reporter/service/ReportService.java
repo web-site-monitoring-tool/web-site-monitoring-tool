@@ -1,4 +1,5 @@
 package com.github.wsmt.reporter.service;
 
-public class ReportService {
+public interface ReportService {
+    void report();
 }

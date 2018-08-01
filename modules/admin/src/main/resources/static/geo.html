@@ -1,45 +1,90 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>wsmt</title>
-    <link type="text/css" rel="stylesheet" href="webjars/bootstrap/4.1.1/css/bootstrap.min.css">
 
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-        google.charts.load('current', {
-            'packages':['geochart'],
-            // Note: you will need to get a mapsApiKey for your project.
-            // See: https://developers.google.com/chart/interactive/docs/basic_load_libs#load-settings
-            'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
-        });
-        google.charts.setOnLoadCallback(drawRegionsMap);
+    <head>
+        <title>wsmt</title>
+        <link type="text/css" rel="stylesheet" href="webjars/bootstrap/4.1.1/css/bootstrap.min.css">
+    </head>
 
-        function drawRegionsMap() {
-            var data = google.visualization.arrayToDataTable([
-                ['Country', 'Popularity'],
-                ['Germany', 200],
-                ['United States', 300],
-                ['Brazil', 400],
-                ['Canada', 500],
-                ['France', 600],
-                ['Russia', 1700]
-            ]);
+    <body>
 
-            var options = {};
+        <div class="container" style="padding-top: 5px;">
+            <a href="url.html" class="btn btn-light" role="button" aria-pressed="true">Url</a>
+            <a href="browser.html" class="btn btn-light" role="button" aria-pressed="true">Browser</a>
+            <a href="geo.html" class="btn btn-dark" role="button" aria-pressed="true">Country</a>
+            <a href="day.html" class="btn btn-light" role="button" aria-pressed="true">Days</a>
+            <a href="time.html" class="btn btn-light" role="button" aria-pressed="true">Times</a>
+            <a class="btn btn-light float-right" role="button" aria-pressed="true" onclick=report()>Refresh</a>
+        </div>
 
-            var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+        <div class="container align-content-center" style="padding-top: 20px;">
+            <div id="regions_div" style="height: 500px;"></div>
+        </div>
 
-            chart.draw(data, options);
-        }
-    </script>
-</head>
-<body>
-    <a href="url.html" class="btn btn-light" role="button" aria-pressed="true">Url</a>
-    <a href="browser.html" class="btn btn-light" role="button" aria-pressed="true">Browser</a>
-    <a href="geo.html" class="btn btn-dark" role="button" aria-pressed="true">Country</a>
+        <div class="container" style="padding-top: 50px;">
+            <table class ="table" id ="country">
+                <thead>
+                <tr>
+                    <th>Country</th>
+                    <th>Count</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
 
-    <div id="regions_div" style="width: 900px; height: 500px;"></div>
-    <script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
-    <script src="webjars/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-</body>
+        <script src="webjars/jquery/3.3.1-1/jquery.min.js"></script>
+        <script src="webjars/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+        <script type="text/javascript">
+            google.charts.load('current', {
+                'packages':['geochart'],
+                'mapsApiKey': 'AIzaSyD-9tSrke72PouQMnMX-a7eZSW0jkFMBWY'
+            });
+            google.charts.setOnLoadCallback(drawRegionsMap);
+
+            function drawRegionsMap() {
+
+                var data = google.visualization.arrayToDataTable([]);
+
+                data.addColumn('string', 'Country');
+                data.addColumn('number', 'Count');
+
+
+
+                $.getJSON('http://' + window.location.hostname + ':8082/countries', function(jsonData) {
+                    $.each(jsonData, function (i, row) {
+
+                        data.addRow([
+                            row.country,
+                            row.count
+                        ]);
+
+                        const country = $("<td>");
+                        const count = $("<td>");
+                        country.text(row.country);
+                        count.text(row.count);
+
+                        const tr = $("<tr>");
+                        tr.append(country);
+                        tr.append(count);
+
+                        $("#country").append(tr);
+                    });
+                    var options = {
+                        backgroundColor: '#81d4fa'
+                    };
+                    var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
+                    chart.draw(data, options);
+                });
+            }
+        </script>
+        <script>
+            function report() {
+                const xhttp = new XMLHttpRequest();
+                xhttp.open('GET', 'http://' + window.location.hostname + ':8084/report', false);
+                xhttp.send();
+                return false;
+            }
+        </script>
+    </body>
 </html>

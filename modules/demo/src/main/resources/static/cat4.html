@@ -1,10 +1,20 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
+<html>
+    <head>
+        <title>Cats</title>
+    </head>
+    <body>
+        <a href="cat1.html">Cat 1</a>
+        <a href="cat2.html">Cat 2</a>
+        <a href="cat3.html">Cat 3</a>
+        <a href="cat4.html">Cat 4</a>
+        <a href="cat5.html">Cat 5</a>
+        <img src="4.jpg">
+        <script type="text/javascript">
+            var img = document.createElement("img");
+            img.src = "http://" + window.location.hostname + ":8080/pixel";
+            var src = document.getElementById("header");
+            src.appendChild(img);
+        </script>
+    </body>
 </html>

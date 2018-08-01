@@ -1,4 +1,7 @@
 package com.github.wsmt.reporter.handler;
 
-public class Handler {
+import java.io.Serializable;
+
+public interface Handler extends Serializable {
+    String handle(String inputRow);
 }

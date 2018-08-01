@@ -1,0 +1,24 @@
+server.port: 8080
+hbase.hbase:
+  zookeeper.quorum: hbase:2181
+  mapreduce:
+    inputtable: profiles
+    scan:
+      columns:
+        - HEADER:host
+        - HEADER:user-agent
+        - HEADER:referer
+        - HEADER:datetime
+      maxversions: 100
+
+postgres:
+  url: jdbc:postgresql://postgres:5432/wsmt
+  dbtable: statistics.url
+  user: wsmt
+  password: wsmt
+
+geoipname: GeoLite2-City.mmdb
+
+useragent:
+  chrome: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.99 Safari/537.36
+  epiphany: Mozilla/5.0 (X11; Ubuntu; Linux x86_64) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/11.0 Safari/605.1.15 elementaryOS/0.4 (Loki) Epiphany/3.18.11

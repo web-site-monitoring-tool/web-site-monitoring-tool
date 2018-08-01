@@ -6,18 +6,19 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import java.util.Date;
 
 @Entity
-@Table(name = "urls")
+@Table(name = "url")
 public class PageStatistics {
     @Id
     @GeneratedValue
     @JsonIgnore
     private final Integer id = null;
-
     private final String url = null;
-
     private final Integer count = null;
+    @JsonIgnore
+    private final Date report = null;
 
     public Integer getId() {
         return id;
@@ -29,5 +30,9 @@ public class PageStatistics {
 
     public Integer getCount() {
         return count;
+    }
+
+    public Date getReport() {
+        return report;
     }
 }

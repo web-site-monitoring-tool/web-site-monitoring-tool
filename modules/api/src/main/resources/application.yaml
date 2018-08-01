@@ -3,4 +3,4 @@ spring:
     url: jdbc:postgresql://postgres:5432/wsmt
     username: wsmt
     password: wsmt
-  jpa.properties.hibernate.default_schema: stat
+  jpa.properties.hibernate.default_schema: statistics
