@@ -5,7 +5,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class GeoIpCountryTest {
-
     @Test
     public void byDbName() {
         GeoIpCountry geoIpCountry = GeoIpCountry.byDbName("GeoLite2-City.mmdb");

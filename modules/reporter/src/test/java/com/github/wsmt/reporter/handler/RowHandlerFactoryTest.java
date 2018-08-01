@@ -6,7 +6,6 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 public class RowHandlerFactoryTest {
-
     @Test
     public void getCountryHandler() {
         Handler countryHandler = RowHandlerFactory.getHandler("country");
