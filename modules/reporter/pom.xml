@@ -29,10 +29,31 @@
             <groupId>com.typesafe</groupId>
             <artifactId>config</artifactId>
         </dependency>
-        <!--postgresql-->
+        <!-- postgresql -->
         <dependency>
             <groupId>org.postgresql</groupId>
             <artifactId>postgresql</artifactId>
+        </dependency>
+        <!--spring-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-webflux</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!--GeoIp2-->
+        <dependency>
+            <groupId>com.maxmind.geoip2</groupId>
+            <artifactId>geoip2</artifactId>
+        </dependency>
+        <!--User Agent-->
+        <dependency>
+            <groupId>nl.basjes.parse.useragent</groupId>
+            <artifactId>yauaa</artifactId>
         </dependency>
     </dependencies>
 

@@ -10,6 +10,6 @@ public class ConfigurationException extends RuntimeException {
     }
 
     public static ConfigurationException byException(Exception cause) {
-        return new ConfigurationException("Can not read configuration", cause);
+        return new ConfigurationException("Can not byDbName configuration", cause);
     }
 }

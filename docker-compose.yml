@@ -47,6 +47,9 @@ services:
 #    restart: unless-stopped
     depends_on:
       - hbase
+      - postgres
+    ports:
+      - "8084:8080"
     volumes:
       - ./modules/reporter/target/reporter.jar:/opt/reporter/reporter.jar
       - ./modules/reporter/application.conf:/opt/reporter/reporter.conf
