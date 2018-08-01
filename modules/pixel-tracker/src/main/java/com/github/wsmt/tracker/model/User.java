@@ -2,6 +2,7 @@ package com.github.wsmt.tracker.model;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 public class User {
@@ -50,6 +51,23 @@ public class User {
 
     public void setNewProfile(boolean newProfile) {
         this.newProfile = newProfile;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof User)) return false;
+        User user = (User) o;
+        return isNewProfile() == user.isNewProfile() &&
+                Objects.equals(getId(), user.getId()) &&
+                Objects.equals(getInfo(), user.getInfo()) &&
+                Objects.equals(getBehavior(), user.getBehavior());
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(getId(), isNewProfile(), getInfo(), getBehavior());
     }
 
     @Override
