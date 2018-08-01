@@ -44,10 +44,9 @@ public class GeoIpCountry implements GeoIp {
             ipAddress = ipAddress.substring(0, ipAddress.indexOf(":")); //erase port
         }
         if (ipAddress.equals("localhost")) {
-            //return "Russia";
-            return Locale.getDefault().getCountry();
+            return "Unknown";
         }
-        InetAddress inetAddress = null;
+        InetAddress inetAddress;
 
         try {
             inetAddress = InetAddress.getByName(ipAddress);
@@ -55,7 +54,7 @@ public class GeoIpCountry implements GeoIp {
             return "Unknown";
         }
 
-        CityResponse response = null;
+        CityResponse response;
 
         try {
             response = databaseReader.city(inetAddress);
@@ -66,22 +65,5 @@ public class GeoIpCountry implements GeoIp {
 
         String country = response.getCountry().getName();
         return country != null ? country : "Unknown";
-
-//        System.out.println(country.getIsoCode());            // 'US'
-//        System.out.println(country.getName());               // 'United States'
-//
-//        Subdivision subdivision = response.getMostSpecificSubdivision();
-//        System.out.println(subdivision.getName());    // 'Minnesota'
-//        System.out.println(subdivision.getIsoCode()); // 'MN'
-//
-//        City city = response.getCity();
-//        System.out.println(city.getName()); // 'Minneapolis'
-//
-//        Postal postal = response.getPostal();
-//        System.out.println(postal.getCode()); // '55455'
-//
-//        Location location = response.getLocation();
-//        System.out.println(location.getLatitude());  // 44.9733
-//        System.out.println(location.getLongitude()); // -93.2323
     }
 }
