@@ -6,8 +6,8 @@
 5. Click "OK" to save
 6. Run Debug (Run -> Debug...)
 
-|     Item      |   Value   |
-|:-------------:|:---------:|
-| Debugger mode |  Attach   |
-|     Host      | localhost |
-|     Port      |   5005    |
+|     Item      |               Value                |
+|:-------------:|:----------------------------------:|
+| Debugger mode |               Attach               |
+|     Host      |             localhost              |
+|     Port      | 5005 (pixel tracker) or 5006 (api) |
