@@ -1,19 +1,26 @@
 # Runbook
-## Build
+## Start
+### Build
     mvn -T 1C clean package
-## Run Demo
-    docker-compose up demo
-## Open Demo Page in your favorite web-browser
+### Run Demo and Admin modules
+    docker-compose up demo admin
+### Open Demo Page in your favorite web-browser
     http://localhost:8081/
-## Start HBase shell
+### Open Admin Page in your favorite web-browser
+    http://localhost:8083/
+We should click "Refresh" button for updating reports
+
+## Read HBase
+### Start HBase shell
     docker exec -i -t wsmt-hbase hbase shell
-## Scan Database
+### Scan Database
     scan 'profiles', {COLUMNS => ['HISTORY', 'HEADER'], VERSIONS => 10}
-## Run Reporter
-    docker-compose up reporter
-## Stop Environment
+
+## Stop
+### Stop Environment
     docker-compose stop
-## Remove Data
+### Remove Data
     docker-compose down
+
 ## Links
-* [Remote Debug of Pixel Tracker](pixel-tracker-remote-debug.md)
+* [Remote Debug](remote-debug.md)
